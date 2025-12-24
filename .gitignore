@@ -16,3 +16,7 @@ Thumbs.db
 
 # Configuración de publicación
 appsettings.Development.json
+
+# Dependencias de Node.js
+node_modules/
+.env
