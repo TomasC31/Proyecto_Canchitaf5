@@ -1,0 +1,39 @@
+.oculto{
+    display: none;
+}
+
+#foto-uruz-principal{
+    width: 100%;
+    height: 380px;      
+    object-fit: cover;
+}
+
+/*Para que los botones de iniciar sesión y registrarse estén centrados*/
+.contenedor-principal {
+    text-align: center;
+}
+
+/* Estilos para los botones de iniciar sesion y registrarse */
+.btn-grande {
+    background-color: #004488;
+    color: white;
+    padding: 10px 20px;
+    
+}
+
+/* Estilos para el encabezado (foto y bienvenidos)*/
+header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}

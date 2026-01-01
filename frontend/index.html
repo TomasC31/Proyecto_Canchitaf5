@@ -8,12 +8,47 @@
         </head>
     <body>
         <header>
-            <h1> "Complejo Uruz" </h1>
-            <p>Selecciona un horario para reservar</p>
+            <img id="foto-uruz-principal" src="fotos/estirada.png">
+            <p> ¡Bienvenido! </p>
         </header>
         <main class="contenedor-principal">
-            <div id="grilla-semanal" class="grilla">   
-            </div>
+           
+            <section id="pantalla-inicio">
+                <h2>¿Que deseas hacer?</h2>
+                <div class="botones-inicio">
+                    <button id="btn-mostrar-login" class="btn-grande"> Iniciar Sesión </button>
+                    <button id="btn-mostrar-registro" class="btn-grande"> Registrarse </button>
+                </div>
+                
+            </section>
+
+
+            <section id = "seccion-login" class="oculto">
+                 <h2> Iniciar Sesión </h2>
+
+                 <form id="form-login">
+                    <input id="login-email" type="text"  placeholder="Ingrese su correo">
+                    <input id="login-password" type="password" placeholder="Ingrese su contraseña">
+                    <button type="submit"> Iniciar Sesión </button>
+                    <button id="btn-volver-de-login-a-inicio" type="button" class="btn-grande"> Volver a Inicio </button>
+                 </form>   
+
+            </section>
+           
+            <section id="seccion-registro" class="oculto">
+                <h2> Registrarse </h2>
+
+                <form id="form-registro">
+                    <input id="registro-nombre" type="text" placeholder="Ingrese su nombre completo">
+                    <input id="registro-email" type="text" placeholder="Ingrese su correo">
+                    <input id="registro-password" type="password" placeholder="Ingrese su contraseña">
+                    <button type="submit"> Registrarse </button>
+                    <button id="btn-volver-de-registro-a-inicio" type="button" class="btn-grande"> Volver a Inicio </button>
+                </form>
+            </section>
+
+
+
         </main>
 
         <script src="app.js"></script>
