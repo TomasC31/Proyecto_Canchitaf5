@@ -9,8 +9,6 @@ const btnVolverDeLoginAInicio = document.getElementById("btn-volver-de-login-a-i
 const btnVolverDeRegistroAInicio = document.getElementById("btn-volver-de-registro-a-inicio");
 
 
-
-
 btnMostrarLogin.addEventListener('click', () => {
     pantallaInicio.classList.add('oculto')
     seccionRegistro.classList.add('oculto')
@@ -27,12 +25,19 @@ btnVolverDeLoginAInicio.addEventListener('click', () => {
     seccionRegistro.classList.add('oculto')
     seccionLogin.classList.add('oculto')
     pantallaInicio.classList.remove('oculto')
+
+    document.getElementById("login-email").value = "";
+    document.getElementById("login-password").value = "";
 })
 
 btnVolverDeRegistroAInicio.addEventListener('click', () => {
     seccionLogin.classList.add('oculto')
     seccionRegistro.classList.add('oculto')
     pantallaInicio.classList.remove('oculto')
+
+    document.getElementById("registro-email").value = "";
+    document.getElementById("registro-password").value = "";
+    document.getElementById("registro-nombre").value = "";
 })
 
 
@@ -66,11 +71,11 @@ formLogin.addEventListener("submit", (e) => {
         if (datos.mensaje === "Bienvenido") {
             alert("¡Hola " + datos.nombre + "! Has iniciado sesión.");
             
-            // Ocultamos login y mostramos inicio
+            //Ocultamos login y mostramos inicio
             seccionLogin.classList.add('oculto');
             pantallaInicio.classList.remove('oculto');
             
-            // Opcional: Limpiar los campos del formulario
+            //Limpiar los campos del formulario
             document.getElementById("login-email").value = "";
             document.getElementById("login-password").value = "";
         } else {
@@ -100,9 +105,21 @@ formRegister.addEventListener("submit", (e) => {
             },
             body: JSON.stringify({nombre, email, password})
         })
-        .then(response => response.text())
-        .then(mensaje => {
-            alert(mensaje); //Mostramos lo que responda el servidor (ej: "Te has registrado...")
-        });
-});
 
+        .then(response => {
+            if(response.ok){
+                response.text().then(mensaje => { alert(mensaje)})
+                
+                document.getElementById("registro-email").value = "";
+                document.getElementById("registro-password").value = "";
+                document.getElementById("registro-nombre").value = "";
+
+                seccionLogin.classList.add("oculto")
+                seccionRegistro.classList.add("oculto")
+                pantallaInicio.classList.remove("oculto")
+            }
+            else{
+                response.text().then(mensaje => {alert(mensaje)})
+            }
+    });
+})

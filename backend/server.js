@@ -40,7 +40,6 @@ sql.connect(config)
 
 //Variables Globales
 const reservas = []; //Base de datos provisoria
-const usuarios = []; // guardamos los emails de los usuarios registrados
 let contadorDeId = 0;
 
 
@@ -125,22 +124,35 @@ app.post("/registrar", async (req, res) => {
 //Para loguear usuario
 app.post("/login", async (req, res) => {
     const {email, password} = req.body;
-    const indice = usuarios.findIndex(usuario => usuario.email === email); //Busco el usuario en la "base de datos"
+    
+    try{
+        const request = new sql.Request();
+        request.input('email', sql.VarChar, email);
 
-    if(indice !== -1){
-        const usuario = usuarios[indice];
-        const passwordCorrecta = await bcrypt.compare(password, usuario.passwordEncriptada); //Comparo la contraseña ingresada con la hasheada
+        const validacion = await request.query('SELECT * FROM dbo.usuarios WHERE email = @email')
         
-        if(passwordCorrecta === true)
-        {
-            res.json({mensaje:"Bienvenido", nombre: usuario.nombre, rol: usuario.rol}) //Envio un json con el mensaje de bienvenida y el rol del usuario a el frontend
-        }
+        if(validacion.recordset.length === 0){
+            return res.status(404).send("Email no encontrado")
+        } 
         else{
-            res.status(401).send("Contraseña incorrecta")
+            const usuario = validacion.recordset[0] //Obtengo el primer (y único) resultado de la consulta
+            const passwordEnBD = usuario.password; //Obtengo la contraseña hasheada que está en la BD
+
+            const coincidenLasContraseñas = await bcrypt.compare(password, passwordEnBD)
+
+            if(coincidenLasContraseñas === true){
+                res.json({
+                    mensaje: "Bienvenido", 
+                    nombre: usuario.nombre, 
+                    rol: usuario.rol})
+            }
+            else{
+                res.status(401).send("Usuario o contraseña incorrecta")
+            }
         }
-    } 
-    else{
-        res.status(404).send("Email no encontrado")
+    } catch(err){
+        console.error(err);
+        res.status(500).send("Error del servidor al intentar iniciar sesión");
     }
 })
 
