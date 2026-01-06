@@ -1,14 +1,20 @@
 
 let nombreUsuarioActual = ""; //Guardo el nombre del usuario que inició sesión
+let fechaPendiente = ""; //Guardo la fecha seleccionada para reservar
+let horarioPendiente = ""; //Guardo el horario seleccionado para reservar
+let botonHorarioPendiente = null; //Guardo el botón del horario seleccionado para reservar
+
 
 const pantallaInicio = document.getElementById("pantalla-inicio");
 const seccionLogin = document.getElementById("seccion-login");
 const seccionRegistro = document.getElementById("seccion-registro");
+const encabezadoPrincipal = document.getElementById("encabezado-principal");
 
 const btnMostrarLogin = document.getElementById("btn-mostrar-login");
 const btnMostrarRegistro = document.getElementById("btn-mostrar-registro");
 const btnVolverDeLoginAInicio = document.getElementById("btn-volver-de-login-a-inicio");
 const btnVolverDeRegistroAInicio = document.getElementById("btn-volver-de-registro-a-inicio");
+const btnReservar = document.getElementById("btn-reservar");
 
 const seccionReservas = document.getElementById("seccion-reservas");
 const contenedorDias = document.getElementById("contenedor-dias");
@@ -21,18 +27,21 @@ btnMostrarLogin.addEventListener('click', () => {
     pantallaInicio.classList.add('oculto')
     seccionRegistro.classList.add('oculto')
     seccionLogin.classList.remove('oculto')
+    encabezadoPrincipal.classList.add('oculto');
 })
 
 btnMostrarRegistro.addEventListener('click', () => {
     pantallaInicio.classList.add('oculto')
     seccionLogin.classList.add('oculto')
     seccionRegistro.classList.remove('oculto')
+    encabezadoPrincipal.classList.add('oculto');
 })
 
 btnVolverDeLoginAInicio.addEventListener('click', () => {
     seccionRegistro.classList.add('oculto')
     seccionLogin.classList.add('oculto')
     pantallaInicio.classList.remove('oculto')
+    encabezadoPrincipal.classList.remove('oculto');
 
     document.getElementById("login-email").value = "";
     document.getElementById("login-password").value = "";
@@ -42,6 +51,7 @@ btnVolverDeRegistroAInicio.addEventListener('click', () => {
     seccionLogin.classList.add('oculto')
     seccionRegistro.classList.add('oculto')
     pantallaInicio.classList.remove('oculto')
+    encabezadoPrincipal.classList.remove('oculto');
 
     document.getElementById("registro-email").value = "";
     document.getElementById("registro-password").value = "";
@@ -109,8 +119,9 @@ formLogin.addEventListener("submit", (e) => {
 //Cerrar sesión
 btnCerrarSesion.addEventListener("click", () => {
     seccionReservas.classList.add("oculto");
-    pantallaInicio.classList.remove("oculto");});
-
+    pantallaInicio.classList.remove("oculto");
+    encabezadoPrincipal.classList.remove("oculto");
+});
 
 
 
@@ -164,12 +175,20 @@ function generarDias(){
         const fechaParaSQL = `${year}-${month}-${day}`;
 
         const boton = document.createElement("button");
-        boton.classList.add("btn-grande");
+        boton.classList.add("btn-dia");
         boton.textContent = textoBoton;
 
         //Cuando hacen click en un dia:
         boton.addEventListener("click", () => {
-            alert("Elegiste: " + textoBoton);
+
+           //Resalto el día seleccionado
+           const diaAnterior = document.querySelector(".btn-dia.seleccionado");
+           if(diaAnterior){
+            diaAnterior.classList.remove("seleccionado");
+           }
+           boton.classList.add("seleccionado");
+
+
             pasoHorarios.classList.remove("oculto");
             generarHorarios(fechaParaSQL);
         });
@@ -179,12 +198,19 @@ function generarDias(){
 
 
 function generarHorarios(fechaSeleccionada){
+
+    fechaPendiente = "";
+    horaPendiente = "";
+    botonHorarioPendiente = null;
+
+    btnReservar.disabled = true;
+
     contenedorHorarios.innerHTML = ""; //Limpia los horarios anteriores
     const listaHorarios = ["18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
 
     listaHorarios.forEach(hora => { 
         const botonHora = document.createElement("button");
-        botonHora.classList.add("btn-grande"); 
+        botonHora.classList.add("btn-horario"); 
         botonHora.textContent = hora;
 
         fetch(`/horarios?fecha=${fechaSeleccionada}&horario=${hora}`)
@@ -197,8 +223,21 @@ function generarHorarios(fechaSeleccionada){
         .catch((error => console.error("Error al verificar horario:", error)));
 
         botonHora.addEventListener("click", () =>{
-            if(confirm(`¿Confirmar reserva para el ${fechaSeleccionada} a las ${hora}`))
-                reservarCancha(fechaSeleccionada, hora, botonHora)
+            const horarioAnterior = document.querySelector(".btn-horario.seleccionado");
+            if (horarioAnterior) {
+                horarioAnterior.classList.remove("seleccionado");
+            }
+
+            //Marco el nuevo botón visualmente
+            botonHora.classList.add("seleccionado");
+
+            //Guardo los datos en las variables temporales
+            fechaPendiente = fechaSeleccionada;
+            horaPendiente = hora;
+            botonHorarioPendiente = botonHora; //Guardo el botón para modificarlo despues
+
+            //Habilito el botón de confirmar
+            btnReservar.disabled = false;
         })
         contenedorHorarios.appendChild(botonHora) //Sirve para agregar el botón al contenedor de horarios
     })
@@ -238,3 +277,11 @@ function reservarCancha(fecha, hora, botonHora){
             alert("Hubo un problema de conexión.");
         });
 }
+
+
+btnReservar.addEventListener("click", () => {
+    // Verificamos que tengamos datos pendientes
+    if (fechaPendiente && horaPendiente) {
+        reservarCancha(fechaPendiente, horaPendiente, botonHorarioPendiente);
+    }
+});

@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="styles.css">
         </head>
     <body>
-        <header>
+        <header id="encabezado-principal">
             <img id="foto-uruz-principal" src="fotos/estirada.png">
             <p> ¡Bienvenido! </p>
         </header>
@@ -16,34 +16,33 @@
             <section id="pantalla-inicio">
                 <h2>¿Que deseas hacer?</h2>
                 <div class="botones-inicio">
-                    <button id="btn-mostrar-login" class="btn-grande"> Iniciar Sesión </button>
-                    <button id="btn-mostrar-registro" class="btn-grande"> Registrarse </button>
+                    <button id="btn-mostrar-login" class="btn-inicio"> Iniciar Sesión </button>
+                    <button id="btn-mostrar-registro" class="btn-inicio"> Registrarse </button>
                 </div>
                 
             </section>
 
 
-            <section id = "seccion-login" class="oculto">
+            <section id = "seccion-login" class="oculto form-tarjeta-fondo">
                  <h2> Iniciar Sesión </h2>
 
                  <form id="form-login">
                     <input id="login-email" type="text"  placeholder="Ingrese su correo">
                     <input id="login-password" type="password" placeholder="Ingrese su contraseña">
-                    <button type="submit"> Iniciar Sesión </button>
-                    <button id="btn-volver-de-login-a-inicio" type="button" class="btn-grande"> Volver a Inicio </button>
+                    <button type="submit" class="btn-inicio"> Iniciar Sesión </button>
+                    <button id="btn-volver-de-login-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
                  </form>   
-
             </section>
            
-            <section id="seccion-registro" class="oculto">
+            <section id="seccion-registro" class="oculto form-tarjeta-fondo">
                 <h2> Registrarse </h2>
 
                 <form id="form-registro">
                     <input id="registro-nombre" type="text" placeholder="Ingrese su nombre completo">
                     <input id="registro-email" type="text" placeholder="Ingrese su correo">
                     <input id="registro-password" type="password" placeholder="Ingrese su contraseña">
-                    <button type="submit"> Registrarse </button>
-                    <button id="btn-volver-de-registro-a-inicio" type="button" class="btn-grande"> Volver a Inicio </button>
+                    <button type="submit" class="btn-inicio"> Registrarse </button>
+                    <button id="btn-volver-de-registro-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
                 </form>
             </section>
 
@@ -51,16 +50,16 @@
                 <h2 id="titulo-bienvenida">Bienvenido</h2>
 
                 <div id="paso-fecha">
-                    <h3> 1. Elige un día: </h3>
+                    <h3>Elige un día: </h3>
                     <div id="contenedor-dias"> </div>
                 </div>
 
                 <div id="paso-horarios" class="oculto">
-                    <h3>2. Elige un horario:</h3>
+                    <h3>Elige un horario:</h3>
                     <div id="contenedor-horarios"></div>
                 </div>
-
-                <button id="btn-cerrar-sesion" class="btn-grande">Cerrar Sesion</button>
+                <button id ="btn-reservar" class="btn-inicio" disabled>Confirmar Reserva</button>
+                <button id="btn-cerrar-sesion" class="btn-inicio">Cerrar Sesion</button>
             </section>
 
         </main>

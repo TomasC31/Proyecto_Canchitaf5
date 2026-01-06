@@ -11,14 +11,25 @@
 /*Para que los botones de iniciar sesión y registrarse estén centrados*/
 .contenedor-principal {
     text-align: center;
+    max-width: 800px;       /* Que no se estire demasiado a lo ancho */
+    margin: 50px auto;      /* 50px de aire arriba/abajo y centrado a los lados */
+    padding: 20px;
 }
 
-/* Estilos para los botones de iniciar sesion y registrarse */
-.btn-grande {
-    background-color: #004488;
-    color: white;
-    padding: 10px 20px;
-    
+
+#btn-cerrar-sesion {
+    margin-top: 50px;       /* Mucho más espacio con los horarios */
+    background-color: #004488; 
+}
+
+#btn-cerrar-sesion:hover { 
+    background-color: #003366;
+}
+
+/* Cuando el botón de reservar está deshabilitado */
+#btn-reservar:disabled {
+    background-color: gray;
+    cursor: default;
 }
 
 /* Estilos para el encabezado (foto y bienvenidos)*/
@@ -37,3 +48,80 @@ input[type="text"], input[type="password"], input[type="email"] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
+.btn-inicio {
+    background-color: #004488;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 0 10px;
+}
+
+.btn-inicio:hover {
+   /* Cambia de color al pasar el mouse */
+    background-color: #003366; 
+}
+
+
+
+.btn-dia {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+
+.btn-horario {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+
+/* Estilo para la burbuja de Login/Registro */
+.form-tarjeta-fondo {
+    background-color: white;       
+    padding: 40px;                 /* Espacio interno para que no se vea apretado */
+    border-radius: 16px;           /* Para los bordes redondeados */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Sombra suave */
+    
+    width: 100%;
+    max-width: 400px;         /* Ancho máximo para que no se estire en toda la pantalla */
+    margin: 50px auto;             /* "auto" a los lados lo centra horizontalmente */
+    text-align: center;            /* Centra los textos y botones de adentro */
+}
+
+/* Para que el titulo se vea mas lindo en la burbuja */
+.form-tarjeta-fondo h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Esto le dice al CSS "Busca cualquier botón DENTRO de la tarjeta y empújalo hacia abajo" */
+.form-tarjeta-fondo button {
+    margin-top: 50px; 
+}
+
+/* Clase para cuando un botón de día está seleccionado */
+.btn-dia.seleccionado {
+    background-color: #004488; 
+    color: white;             
+    border: 1px solid #004488;
+    transform: scale(1.05);   
+    transition: all 0.2s;     
+}
+
+/* Clase para cuando un botón de día está seleccionado */
+.btn-horario.seleccionado {
+   background-color: #004488;
+   color: white;
+}
+
