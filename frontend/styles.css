@@ -1,28 +1,37 @@
-.oculto{
+.oculto {
     display: none;
 }
 
-#foto-uruz-principal{
+* {
+    box-sizing: border-box; /* Incluye el padding y border dentro del width y height */
+}
+
+
+
+#foto-uruz-principal {
     width: 100%;
-    height: 380px;      
+    height: 380px;
     object-fit: cover;
 }
 
 /*Para que los botones de iniciar sesión y registrarse estén centrados*/
 .contenedor-principal {
     text-align: center;
-    max-width: 800px;       /* Que no se estire demasiado a lo ancho */
-    margin: 50px auto;      /* 50px de aire arriba/abajo y centrado a los lados */
+    max-width: 840px;
+    /* Que no se estire demasiado a lo ancho */
+    margin: 1px auto;
+    /* Espacio que hay entre bienvenidos y que deseas hacer */
     padding: 20px;
 }
 
 
 #btn-cerrar-sesion {
-    margin-top: 50px;       /* Mucho más espacio con los horarios */
-    background-color: #004488; 
+    margin-top: 50px;
+    /* Mucho más espacio con los horarios */
+    background-color: #004488;
 }
 
-#btn-cerrar-sesion:hover { 
+#btn-cerrar-sesion:hover {
     background-color: #003366;
 }
 
@@ -40,14 +49,16 @@ header {
     font-size: 26px;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
- 
+
 }
 
 .btn-inicio {
@@ -59,8 +70,8 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-inicio:hover {
-   /* Cambia de color al pasar el mouse */
-    background-color: #003366; 
+    /* Cambia de color al pasar el mouse */
+    background-color: #003366;
 }
 
 
@@ -88,15 +99,15 @@ input[type="text"], input[type="password"], input[type="email"] {
 
 /* Estilo para la burbuja de Login/Registro */
 .form-tarjeta-fondo {
-    background-color: white;       
-    padding: 40px;                 /* Espacio interno para que no se vea apretado */
-    border-radius: 16px;           /* Para los bordes redondeados */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Sombra suave */
-    
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
     width: 100%;
-    max-width: 400px;         /* Ancho máximo para que no se estire en toda la pantalla */
-    margin: 50px auto;             /* "auto" a los lados lo centra horizontalmente */
-    text-align: center;            /* Centra los textos y botones de adentro */
+    max-width: 480px;
+    margin: 50px auto;
+    text-align: center;
 }
 
 /* Para que el titulo se vea mas lindo en la burbuja */
@@ -108,22 +119,22 @@ input[type="text"], input[type="password"], input[type="email"] {
 
 /* Esto le dice al CSS "Busca cualquier botón DENTRO de la tarjeta y empújalo hacia abajo" */
 .form-tarjeta-fondo button {
-    margin-top: 50px; 
+    margin-top: 50px;
 }
 
 /* Clase para cuando un botón de día está seleccionado */
 .btn-dia.seleccionado {
-    background-color: #004488; 
-    color: white;             
+    background-color: #004488;
+    color: white;
     border: 1px solid #004488;
-    transform: scale(1.05);   
-    transition: all 0.2s;     
+    transform: scale(1.05);
+    transition: all 0.2s;
 }
 
 /* Clase para cuando un botón de día está seleccionado */
 .btn-horario.seleccionado {
-   background-color: #004488;
-   color: white;
+    background-color: #004488;
+    color: white;
 }
 
 
@@ -137,4 +148,68 @@ input[type="text"], input[type="password"], input[type="email"] {
     color: green;
     font-size: 18px;
     margin-top: 50px;
+}
+
+
+/* Estilo para la burbuja de Login/Registro */
+.form-tarjeta-fondo-reserva {
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 680px;
+    margin: 50px auto;
+    text-align: center;
+    
+}
+
+/* Para que el titulo se vea mas lindo en la burbuja */
+.form-tarjeta-fondo-reserva h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-tarjeta-fondo-reserva-izquierda {
+    text-align: left;
+    /* Alinea el texto a la izquierda */
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    max-width: 380px;
+    margin: 50px 20px;
+    position: absolute ;
+    left: 20px;
+}
+
+#contenedor-burbujas {
+    display: flex;
+}
+
+
+/* Para las pantallas chicas*/
+@media (max-width: 800px) {
+    #contenedor-burbujas {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-tarjeta-fondo {
+        margin-top: 130px;
+    }
+
+    .form-tarjeta-fondo-reserva {
+        max-width: 90%;
+    }
+
+    .form-tarjeta-fondo-reserva-izquierda {
+        position: static;
+        margin: 20px 0;
+        max-width: 90%;
+    }
 }

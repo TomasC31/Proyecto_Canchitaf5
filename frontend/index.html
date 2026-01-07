@@ -1,79 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reserva Tu Cancha</title>
-        <link rel="stylesheet" href="styles.css">
-        </head>
-    <body>
-        <header id="encabezado-principal">
-            <img id="foto-uruz-principal" src="fotos/estirada.png">
-            <p> ¡Bienvenido! </p>
-        </header>
-        <main class="contenedor-principal">
-           
-            <section id="pantalla-inicio">
-                <h2>¿Que deseas hacer?</h2>
-                <div class="botones-inicio">
-                    <button id="btn-mostrar-login" class="btn-inicio"> Iniciar Sesión </button>
-                    <button id="btn-mostrar-registro" class="btn-inicio"> Registrarse </button>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva Tu Cancha</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header id="encabezado-principal">
+        <img id="foto-uruz-principal" src="fotos/estirada.png">
+        <p> ¡Bienvenido! </p>
+    </header>
+    <main class="contenedor-principal">
+
+        <section id="pantalla-inicio">
+            <h2>¿Que deseas hacer?</h2>
+            <div class="botones-inicio">
+                <button id="btn-mostrar-login" class="btn-inicio"> Iniciar Sesión </button>
+                <button id="btn-mostrar-registro" class="btn-inicio"> Registrarse </button>
+            </div>
+
+        </section>
+
+
+        <section id="seccion-login" class="oculto form-tarjeta-fondo ">
+            <h2> Iniciar Sesión </h2>
+
+            <form id="form-login">
+                <input id="login-email" type="text" placeholder="Ingrese su correo">
+                <input id="login-password" type="password" placeholder="Ingrese su contraseña">
+
+                <p id="mensaje-error-login" class="mensaje-error"></p>
+
+                <button type="submit" class="btn-inicio"> Iniciar Sesión </button>
+                <button id="btn-volver-de-login-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
+            </form>
+        </section>
+
+        <section id="seccion-registro" class="oculto form-tarjeta-fondo">
+            <h2> Registrarse </h2>
+
+            <form id="form-registro">
+                <input id="registro-nombre" type="text" placeholder="Ingrese su nombre y apellido">
+                <input id="registro-email" type="text" placeholder="Ingrese su correo">
+                <input id="registro-password" type="password" placeholder="Ingrese su contraseña">
+
+                <p id="mensaje-error-registro" class="mensaje-error"></p>
+
+                <button type="submit" class="btn-inicio"> Registrarse </button>
+                <button id="btn-volver-de-registro-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
+            </form>
+        </section>
+
+        <section id="seccion-reservas" class="oculto">
+            <h2 id="titulo-bienvenida">Bienvenido</h2>
+
+            <div id="contenedor-burbujas" class="contenedor-burbujas">
+
+                <div id="panel-medio" class="form-tarjeta-fondo-reserva">
+
+                    <div id="paso-fecha">
+                        <h3>Elige un día: </h3>
+                        <div id="contenedor-dias"> </div>
+                    </div>
+
+                    <div id="paso-horarios" class="oculto">
+                        <h3>Elige un horario:</h3>
+                        <div id="contenedor-horarios"></div>
+                    </div>
+                    <p id="mensaje-reserva-exitosa" class="mensaje-exito-reserva"></p>
+                    <button id="btn-reservar" class="btn-inicio" disabled>Confirmar Reserva</button>
+                    <button id="btn-cerrar-sesion" class="btn-inicio">Cerrar Sesion</button>
+
                 </div>
-                
-            </section>
 
+                <div id="panel-izquierda" class="form-tarjeta-fondo-reserva-izquierda"> </div>
 
-            <section id = "seccion-login" class="oculto form-tarjeta-fondo">
-                 <h2> Iniciar Sesión </h2>
+            </div>
 
-                 <form id="form-login">
-                    <input id="login-email" type="text"  placeholder="Ingrese su correo">
-                    <input id="login-password" type="password" placeholder="Ingrese su contraseña">
+        </section>
 
-                    <p id="mensaje-error-login" class="mensaje-error"></p>
+    </main>
 
-                    <button type="submit" class="btn-inicio"> Iniciar Sesión </button>
-                    <button id="btn-volver-de-login-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
-                 </form>   
-            </section>
-           
-            <section id="seccion-registro" class="oculto form-tarjeta-fondo">
-                <h2> Registrarse </h2>
+    <script src="app.js"></script>
+</body>
 
-                <form id="form-registro">
-                    <input id="registro-nombre" type="text" placeholder="Ingrese su nombre y apellido">
-                    <input id="registro-email" type="text" placeholder="Ingrese su correo">
-                    <input id="registro-password" type="password" placeholder="Ingrese su contraseña">
-
-                    <p id="mensaje-error-registro" class="mensaje-error"></p>
-
-                    <button type="submit" class="btn-inicio"> Registrarse </button>
-                    <button id="btn-volver-de-registro-a-inicio" type="button" class="btn-inicio"> Volver a Inicio </button>
-                </form>
-            </section>
-
-            <section id="seccion-reservas" class="oculto">
-                <h2 id="titulo-bienvenida">Bienvenido</h2>
-
-                <div id="paso-fecha">
-                    <h3>Elige un día: </h3>
-                    <div id="contenedor-dias"> </div>
-                </div>
-
-                <div id="paso-horarios" class="oculto">
-                    <h3>Elige un horario:</h3>
-                    <div id="contenedor-horarios"></div>
-                </div>
-                <p id="mensaje-reserva-exitosa" class="mensaje-exito-reserva"></p>
-                <button id ="btn-reservar" class="btn-inicio" disabled>Confirmar Reserva</button>
-                <button id="btn-cerrar-sesion" class="btn-inicio">Cerrar Sesion</button>
-            </section>
-
-        </main>
-
-        <script src="app.js"></script>
-        </body>
-    </html>
-
-
-    
+</html>

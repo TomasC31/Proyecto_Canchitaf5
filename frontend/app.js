@@ -68,7 +68,7 @@ btnVolverDeRegistroAInicio.addEventListener('click', () => {
 
 
 
-const formLogin = document.getElementById("form-login") 
+const formLogin = document.getElementById("form-login")
 
 //Sirve para evitar que el formulario recargue la página al enviarse
 formLogin.addEventListener("submit", (e) => {
@@ -76,7 +76,7 @@ formLogin.addEventListener("submit", (e) => {
 
     const email = document.getElementById("login-email").value //Obtengo el valor del campo email
     const password = document.getElementById("login-password").value //Obtengo el valor del campo password
-    
+
     fetch('/login', {
         method: 'POST',
         headers: {
@@ -84,42 +84,44 @@ formLogin.addEventListener("submit", (e) => {
         },
         body: JSON.stringify({ email, password })
     })
-    .then(response => {
-        // Si la respuesta es exitosa (status 200-299), la tratamos como JSON
-        if (response.ok) {
-            return response.json();
-        } else {
-            // Si hay error (401, 404, etc.), la tratamos como texto
-            return response.text();
-        }
-    })
-    .then(datos => {
-        // Verificamos si es el objeto de éxito
-        if (datos.mensaje === "Bienvenido") {
-            
-            //Ocultamos login y mostramos inicio
-            seccionLogin.classList.add('oculto');
-            pantallaInicio.classList.add('oculto');
-            seccionReservas.classList.remove('oculto');
+        .then(response => {
+            // Si la respuesta es exitosa (status 200-299), la tratamos como JSON
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Si hay error (401, 404, etc.), la tratamos como texto
+                return response.text();
+            }
+        })
+        .then(datos => {
+            // Verificamos si es el objeto de éxito
+            if (datos.mensaje === "Bienvenido") {
 
-            tituloBienvenida.textContent = "Bienvenido, " + datos.nombre;
+                //Ocultamos login y mostramos inicio
+                seccionLogin.classList.add('oculto');
+                pantallaInicio.classList.add('oculto');
+                seccionReservas.classList.remove('oculto');
+                mensajeErrorLogin.textContent = "";
 
-            nombreUsuarioActual = datos.nombre; //Guardo el nombre del usuario que inició sesión
+                tituloBienvenida.textContent = "Bienvenido, " + datos.nombre;
 
-            generarDias(); //LLamo a la función para generar los días disponibles
+                nombreUsuarioActual = datos.nombre; //Guardo el nombre del usuario que inició sesión
 
-            //Limpiar los campos del formulario
-            document.getElementById("login-email").value = "";
-            document.getElementById("login-password").value = "";
-        } else {
-            // Si no, es un mensaje de error (ej: "Contraseña incorrecta")
-            mensajeErrorLogin.textContent = datos
-        }
-    })
-    .catch(error => {
-        console.error("Error en la petición:", error);
-        mensajeErrorLogin.textContent = "Hubo un problema de  conexión";
-    });
+                generarDias(); //LLamo a la función para generar los días disponibles
+                cargarMisReservas(); //Cargo las reservas del usuario que inició sesión
+
+                //Limpiar los campos del formulario
+                document.getElementById("login-email").value = "";
+                document.getElementById("login-password").value = "";
+            } else {
+                // Si no, es un mensaje de error (ej: "Contraseña incorrecta")
+                mensajeErrorLogin.textContent = datos
+            }
+        })
+        .catch(error => {
+            console.error("Error en la petición:", error);
+            mensajeErrorLogin.textContent = "Hubo un problema de  conexión";
+        });
 });
 
 //Cerrar sesión
@@ -127,6 +129,7 @@ btnCerrarSesion.addEventListener("click", () => {
     seccionReservas.classList.add("oculto");
     pantallaInicio.classList.remove("oculto");
     encabezadoPrincipal.classList.remove("oculto");
+    mensajeReservaExitosa.textContent = "";
 });
 
 
@@ -139,18 +142,18 @@ formRegister.addEventListener("submit", (e) => {
     const email = document.getElementById("registro-email").value
     const password = document.getElementById("registro-password").value
 
-        //Envio los datos del registro al servidor
+    //Envio los datos del registro al servidor
     fetch('/registrar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({nombre, email, password})
-        })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nombre, email, password })
+    })
 
         .then(response => {
-            if(response.ok){
-            
+            if (response.ok) {
+
                 document.getElementById("registro-email").value = "";
                 document.getElementById("registro-password").value = "";
                 document.getElementById("registro-nombre").value = "";
@@ -159,22 +162,22 @@ formRegister.addEventListener("submit", (e) => {
                 seccionRegistro.classList.add("oculto")
                 seccionLogin.classList.remove("oculto")
             }
-            else{
-                response.text().then(mensaje => {mensajeErrorRegistro.textContent = mensaje});
+            else {
+                response.text().then(mensaje => { mensajeErrorRegistro.textContent = mensaje });
             }
-    });
+        });
 })
 
-function generarDias(){
+function generarDias() {
     contenedorDias.innerHTML = ""; // Limpia los días anteriores
     const hoy = new Date();
-    for(let i = 0; i < 4; i++){
+    for (let i = 0; i < 4; i++) {
         let fecha = new Date(hoy);
         fecha.setDate(hoy.getDate() + i);
 
-        const textoBoton = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric'});
+        const textoBoton = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric' });
         const year = fecha.getFullYear();
-        const month = (fecha.getMonth() +1).toString().padStart(2, '0');
+        const month = (fecha.getMonth() + 1).toString().padStart(2, '0');
         const day = fecha.getDate().toString().padStart(2, '0');
 
         const fechaParaSQL = `${year}-${month}-${day}`;
@@ -186,23 +189,23 @@ function generarDias(){
         //Cuando hacen click en un dia:
         boton.addEventListener("click", () => {
 
-           //Resalto el día seleccionado
-           const diaAnterior = document.querySelector(".btn-dia.seleccionado");
-           if(diaAnterior){
-            diaAnterior.classList.remove("seleccionado");
-           }
-           boton.classList.add("seleccionado");
+            //Resalto el día seleccionado
+            const diaAnterior = document.querySelector(".btn-dia.seleccionado");
+            if (diaAnterior) {
+                diaAnterior.classList.remove("seleccionado");
+            }
+            boton.classList.add("seleccionado");
 
 
             pasoHorarios.classList.remove("oculto");
             generarHorarios(fechaParaSQL);
         });
         contenedorDias.appendChild(boton);
-    }   
+    }
 }
 
 
-function generarHorarios(fechaSeleccionada){
+function generarHorarios(fechaSeleccionada) {
 
     fechaPendiente = "";
     horaPendiente = "";
@@ -213,21 +216,21 @@ function generarHorarios(fechaSeleccionada){
     contenedorHorarios.innerHTML = ""; //Limpia los horarios anteriores
     const listaHorarios = ["18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
 
-    listaHorarios.forEach(hora => { 
+    listaHorarios.forEach(hora => {
         const botonHora = document.createElement("button");
-        botonHora.classList.add("btn-horario"); 
+        botonHora.classList.add("btn-horario");
         botonHora.textContent = hora;
 
         fetch(`/horarios?fecha=${fechaSeleccionada}&horario=${hora}`)
-        .then(response => {
-            if(!response.ok){
-                botonHora.disabled = true; //Deshabilito el botón si el turno está ocupado
-                botonHora.style.backgroundColor = "gray"; //Color gris para ocupado
-            }
-        })
-        .catch((error => console.error("Error al verificar horario:", error)));
+            .then(response => {
+                if (!response.ok) {
+                    botonHora.disabled = true; //Deshabilito el botón si el turno está ocupado
+                    botonHora.style.backgroundColor = "gray"; //Color gris para ocupado
+                }
+            })
+            .catch((error => console.error("Error al verificar horario:", error)));
 
-        botonHora.addEventListener("click", () =>{
+        botonHora.addEventListener("click", () => {
             const horarioAnterior = document.querySelector(".btn-horario.seleccionado");
             if (horarioAnterior) {
                 horarioAnterior.classList.remove("seleccionado");
@@ -248,17 +251,17 @@ function generarHorarios(fechaSeleccionada){
     })
 }
 
-function reservarCancha(fecha, hora, botonHora){
+function reservarCancha(fecha, hora, botonHora) {
     fetch("/reservar", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({nombre: nombreUsuarioActual, fecha, horario: hora})
+        body: JSON.stringify({ nombre: nombreUsuarioActual, fecha, horario: hora })
     })
 
 
-    .then(response => {
+        .then(response => {
             // Si la respuesta es exitosa (status 200-299), la tratamos como JSON
             if (response.ok) {
                 return response.text();
@@ -273,7 +276,7 @@ function reservarCancha(fecha, hora, botonHora){
 
                 mensajeReservaExitosa.classList.remove("mensaje-error");
                 mensajeReservaExitosa.classList.add("mensaje-exito-reserva")
-                mensajeReservaExitosa.textContent ="¡Reserva exitosa para el " + fecha + " a las " + hora + "!";
+                mensajeReservaExitosa.textContent = "¡Reserva exitosa para el " + fecha + " a las " + hora + "!";
                 botonHora.disabled = true; //Deshabilito el botón del horario reservado
                 botonHora.style.backgroundColor = "gray"; //Cambio el color del botón reservado
 
@@ -290,6 +293,59 @@ function reservarCancha(fecha, hora, botonHora){
             alert("Hubo un problema de conexión.");
         });
 }
+
+function cargarMisReservas() {
+    const contenedorReservas = document.getElementById("panel-izquierda")
+
+    contenedorReservas.innerHTML = "<h3>Mis Reservas</h3>"; //Limpio las reservas anteriores, y le ponogo un titulo
+
+    fetch(`/ver-reservas?nombre=${nombreUsuarioActual}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json(); //Si sale bien, muestro el JSON
+            } else {
+                contenedorReservas.innerHTML += "<p>No tienes reservas aún.</p>";
+                throw new Error("Sin reservas");
+            }
+        })
+        .then(listaReservas => {
+            console.log("Reservas encontradas:", listaReservas);
+            
+            const hoy = new Date();
+            
+            //Ordeno las reservas de la más reciente a la más antigua mirando las fechas y horarios
+            listaReservas.sort((b, a) => {
+                const textoFechaCompletaA = a.fechaReserva.split("T")[0] + "T" + a.horarioElegido.split("T")[1];
+                const textoFechaCompletaB = b.fechaReserva.split("T")[0] + "T" + b.horarioElegido.split("T")[1];
+
+                return new Date(textoFechaCompletaB) - new Date(textoFechaCompletaA);
+            });
+
+            listaReservas.forEach(elementoDeLista => {
+
+                const fechaACompararConLaDeHoy = new Date(elementoDeLista.fechaReserva);
+
+                if(fechaACompararConLaDeHoy >= hoy){
+
+                    const fecha = elementoDeLista.fechaReserva.split("T")[0];
+                    const hora = elementoDeLista.horarioElegido.slice(11,16);
+
+                    const tarjeta = document.createElement("div")
+                    tarjeta.textContent = `Fecha: ${fecha} - Horario: ${hora}`;
+                    contenedorReservas.appendChild(tarjeta);
+
+                }
+           })
+
+        })
+    
+        .catch(error => console.error("Error al cargar reservas:", error));
+}
+
+
+
+
+
 
 
 btnReservar.addEventListener("click", () => {
